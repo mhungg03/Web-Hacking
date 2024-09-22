@@ -1,6 +1,8 @@
 # Lỗ hổng CSRF ( CROSS SITE REQUEST FORGERY)
 
-## LAB: SAMESITE LAX BYPASS VIA COOKIE REFRESH
-B1: Đăng nhập vào tài khoản wiener:peter
-B2: Thay đổi email trong tài khoản, quan sát http request trong Burp
-B3: Quan sát yêu cầu post /my-account/change-email thấy không có tham số k thể đoán trước => nguy cơ tấn công CSRF
+## LAB: SAMESITE LAX BYPASS VIA COOKIE REFRESH  
+
+B1: Đăng nhập vào tài khoản wiener:peter <br>
+B2: Thay đổi email => quan sát http request trong Burp <br>
+B3: Quan sát yêu cầu POST /my-account/change-email không có tham số k thể doán trước => Nguy cơ tấn công CSRF <br>
+B4: 
