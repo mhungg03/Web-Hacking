@@ -65,3 +65,44 @@ Content-Length: 100
 
 postId=3&comment=This+post+was+extremely+helpful.&name=Carlos+Montoya&email=carlos%40normal-user.net
 ```
+Sau khi bình luận này được gửi, bất kỳ người dùng nào truy cập bài đăng trên blog sẽ nhận được thông tin sau trong phản hồi của ứng dụng:  
+`<p>This post was extremely helpful.</p>`  
+Giả sử ứng dụng không thực hiện bất kỳ xử lý dữ liệu nào khác, kẻ tấn công có thể gửi bình luận độc hại như thế này:  
+`<script>/* Bad stuff here... */</script>`  
+Theo yêu cầu của kẻ tấn công, bình luận này sẽ được mã hóa URL thành:  
+`comment=%3Cscript%3E%2F*%2BBad%2Bstuff%2Bhere...%2B*%2F%3C%2Fscript%3E`  
+Bất kỳ người dùng nào truy cập bài đăng trên blog sẽ nhận được thông tin sau trong phản hồi của ứng dụng:  
+`<p><script>/* Bad stuff here... */</script></p>`  
+Sau đó, tập lệnh do kẻ tấn công cung cấp sẽ được thực thi trên trình duyệt của người dùng nạn nhân, trong bối cảnh phiên làm việc của họ với ứng dụng.  
+> ### Tác động của Stored XSS
+Nếu kẻ tấn công có thể kiểm soát một tập lệnh được thực thi trong trình duyệt của nạn nhân, thì thông thường chúng có thể xâm phạm hoàn toàn người dùng đó. Kẻ tấn công có thể thực hiện bất kỳ hành động nào có thể áp dụng cho tác động của lỗ hổng XSS được phản ánh .
+
+Về khả năng khai thác, sự khác biệt chính giữa XSS phản chiếu và XSS lưu trữ là lỗ hổng XSS lưu trữ cho phép các cuộc tấn công tự chứa trong chính ứng dụng. Kẻ tấn công không cần phải tìm cách bên ngoài để dụ dỗ người dùng khác thực hiện một yêu cầu cụ thể có chứa khai thác của họ. Thay vào đó, kẻ tấn công đặt khai thác của họ vào chính ứng dụng và chỉ cần đợi người dùng gặp phải nó.
+
+Bản chất khép kín của các khai thác tập lệnh chéo trang được lưu trữ đặc biệt có liên quan trong các tình huống mà lỗ hổng XSS chỉ ảnh hưởng đến những người dùng hiện đang đăng nhập vào ứng dụng. Nếu XSS được phản ánh, thì cuộc tấn công phải được tính thời gian một cách ngẫu nhiên: người dùng bị dụ thực hiện yêu cầu của kẻ tấn công vào thời điểm họ không đăng nhập sẽ không bị xâm phạm. Ngược lại, nếu XSS được lưu trữ, thì người dùng được đảm bảo đã đăng nhập vào thời điểm họ gặp phải khai thác.  
+> ### Các bối cảnh khác nhau của Stored XSS
+Có nhiều loại mã lệnh cross-site scripting được lưu trữ khác nhau. Vị trí của dữ liệu được lưu trữ trong phản hồi của ứng dụng xác định loại tải trọng nào cần thiết để khai thác nó và cũng có thể ảnh hưởng đến tác động của lỗ hổng.
+
+Ngoài ra, nếu ứng dụng thực hiện bất kỳ xác thực hoặc xử lý nào khác trên dữ liệu trước khi dữ liệu được lưu trữ hoặc tại thời điểm dữ liệu được lưu trữ được đưa vào phản hồi, điều này thường sẽ ảnh hưởng đến loại tải trọng XSS cần thiết.  
+> ### Cách tìm lỗ hổng Stored XSS
+Nhiều lỗ hổng XSS được lưu trữ có thể được tìm thấy bằng trình quét lỗ hổng web của Burp Suite .
+
+Kiểm tra các lỗ hổng XSS được lưu trữ theo cách thủ công có thể là một thách thức. Bạn cần kiểm tra tất cả các "điểm vào" có liên quan mà qua đó dữ liệu có thể kiểm soát được của kẻ tấn công có thể vào quá trình xử lý của ứng dụng và tất cả các "điểm thoát" mà dữ liệu đó có thể xuất hiện trong phản hồi của ứng dụng.
+
+Các điểm nhập vào quá trình xử lý ứng dụng bao gồm:
+
+Các tham số hoặc dữ liệu khác trong chuỗi truy vấn URL và nội dung tin nhắn.
+Đường dẫn tệp URL.
+Tiêu đề yêu cầu HTTP có thể không khai thác được liên quan đến XSS được phản ánh .
+Bất kỳ tuyến đường ngoài băng tần nào mà kẻ tấn công có thể gửi dữ liệu vào ứng dụng. Các tuyến đường hiện có hoàn toàn phụ thuộc vào chức năng được ứng dụng triển khai: ứng dụng webmail sẽ xử lý dữ liệu nhận được trong email; ứng dụng hiển thị nguồn cấp dữ liệu Twitter có thể xử lý dữ liệu có trong các tweet của bên thứ ba; và trình tổng hợp tin tức sẽ bao gồm dữ liệu có nguồn gốc từ các trang web khác.
+Điểm thoát cho các cuộc tấn công XSS được lưu trữ đều là các phản hồi HTTP có thể được trả về cho bất kỳ loại người dùng ứng dụng nào trong mọi tình huống.
+
+Bước đầu tiên trong quá trình kiểm tra lỗ hổng XSS được lưu trữ là xác định các liên kết giữa điểm vào và điểm ra, theo đó dữ liệu được gửi đến điểm vào được phát ra từ điểm ra. Lý do tại sao điều này có thể khó khăn là:
+
+Dữ liệu được gửi đến bất kỳ điểm nhập nào về nguyên tắc có thể được phát ra từ bất kỳ điểm thoát nào. Ví dụ, tên hiển thị do người dùng cung cấp có thể xuất hiện trong nhật ký kiểm tra tối nghĩa mà chỉ một số người dùng ứng dụng mới có thể nhìn thấy.
+Dữ liệu hiện đang được ứng dụng lưu trữ thường dễ bị ghi đè do các hành động khác được thực hiện trong ứng dụng. Ví dụ, chức năng tìm kiếm có thể hiển thị danh sách các tìm kiếm gần đây, danh sách này sẽ nhanh chóng được thay thế khi người dùng thực hiện các tìm kiếm khác.
+Để xác định toàn diện các liên kết giữa các điểm vào và ra sẽ bao gồm việc kiểm tra từng hoán vị riêng biệt, gửi một giá trị cụ thể vào điểm vào, điều hướng trực tiếp đến điểm ra và xác định xem giá trị có xuất hiện ở đó hay không. Tuy nhiên, cách tiếp cận này không thực tế trong một ứng dụng có nhiều hơn một vài trang.
+
+Thay vào đó, một cách tiếp cận thực tế hơn là làm việc một cách có hệ thống thông qua các điểm nhập dữ liệu, gửi một giá trị cụ thể vào từng điểm và theo dõi phản hồi của ứng dụng để phát hiện các trường hợp giá trị đã gửi xuất hiện. Có thể đặc biệt chú ý đến các chức năng ứng dụng có liên quan, chẳng hạn như bình luận trên các bài đăng trên blog. Khi giá trị đã gửi được quan sát thấy trong phản hồi, bạn cần xác định xem dữ liệu có thực sự được lưu trữ trên các yêu cầu khác nhau hay không, trái ngược với việc chỉ được phản ánh trong phản hồi ngay lập tức.
+
+Khi bạn đã xác định được các liên kết giữa các điểm vào và ra trong quá trình xử lý của ứng dụng, mỗi liên kết cần được kiểm tra cụ thể để phát hiện xem có lỗ hổng XSS được lưu trữ hay không. Điều này bao gồm việc xác định ngữ cảnh trong phản hồi nơi dữ liệu được lưu trữ xuất hiện và kiểm tra các tải trọng XSS ứng viên phù hợp có thể áp dụng cho ngữ cảnh đó. Tại thời điểm này, phương pháp kiểm tra về cơ bản giống như để tìm lỗ hổng XSS Reflected
