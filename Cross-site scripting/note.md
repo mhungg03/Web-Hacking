@@ -58,8 +58,8 @@ Kiểm tra lỗ hổng XSS phản ánh theo cách thủ công bao gồm các bư
 Lỗi mã hóa tập lệnh chéo trang được lưu trữ (còn gọi là XSS bậc hai hoặc XSS dai dẳng) phát sinh khi một ứng dụng nhận dữ liệu từ một nguồn không đáng tin cậy và đưa dữ liệu đó vào các phản hồi HTTP sau đó theo cách không an toàn.
 
 Giả sử một trang web cho phép người dùng gửi bình luận về các bài đăng trên blog, được hiển thị cho những người dùng khác. Người dùng gửi bình luận bằng yêu cầu HTTP như sau:
-`POST /post/comment HTTP/1.1
+```POST /post/comment HTTP/1.1
 Host: vulnerable-website.com
 Content-Length: 100
 
-postId=3&comment=This+post+was+extremely+helpful.&name=Carlos+Montoya&email=carlos%40normal-user.net`
+postId=3&comment=This+post+was+extremely+helpful.&name=Carlos+Montoya&email=carlos%40normal-user.net```
