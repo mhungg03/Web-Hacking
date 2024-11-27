@@ -20,13 +20,13 @@ Kiểm tra thủ công đối với XSS dựa trên DOM phát sinh từ các tha
 Tấn công chéo trang web phản chiếu (hay XSS) xảy ra khi một ứng dụng nhận dữ liệu trong yêu cầu HTTP và đưa dữ liệu đó vào phản hồi ngay lập tức theo cách không an toàn.
 
 Giả sử một trang web có chức năng tìm kiếm nhận từ khóa tìm kiếm do người dùng cung cấp trong tham số URL:
-`https://insecure-website.com/search?term=gift`  
-Ứng dụng sẽ lặp lại thuật ngữ tìm kiếm được cung cấp trong phản hồi cho URL này:
-`<p>You searched for: gift</p>`
-Giả sử ứng dụng không thực hiện bất kỳ xử lý dữ liệu nào khác, kẻ tấn công có thể xây dựng một cuộc tấn công như thế này:
-`https://insecure-website.com/search?term=<script>/*+Bad+stuff+here...+*/</script>`
+`https://insecure-website.com/search?term=gift`  </br>
+Ứng dụng sẽ lặp lại thuật ngữ tìm kiếm được cung cấp trong phản hồi cho URL này:<br>
+`<p>You searched for: gift</p>`<br>
+Giả sử ứng dụng không thực hiện bất kỳ xử lý dữ liệu nào khác, kẻ tấn công có thể xây dựng một cuộc tấn công như thế này:<br>
+`https://insecure-website.com/search?term=<script>/*+Bad+stuff+here...+*/</script>`<br>
 URL này sẽ cho kết quả phản hồi như sau:
-`<p>You searched for: <script>/* Bad stuff here... */</script></p>`
+`<p>You searched for: <script>/* Bad stuff here... */</script></p>`<br>
 Nếu người dùng ứng dụng khác yêu cầu URL của kẻ tấn công, thì tập lệnh do kẻ tấn công cung cấp sẽ được thực thi trên trình duyệt của người dùng nạn nhân, trong bối cảnh phiên làm việc của họ với ứng dụng.  
 > ### Ảnh hưởng của cuộc tấn công XSS Reflected
 Nếu kẻ tấn công có thể kiểm soát một tập lệnh được thực thi trong trình duyệt của nạn nhân, thì thông thường chúng có thể xâm phạm hoàn toàn người dùng đó. Trong số những thứ khác, kẻ tấn công có thể:
@@ -53,3 +53,13 @@ Kiểm tra lỗ hổng XSS phản ánh theo cách thủ công bao gồm các bư
 * Kiểm tra tải trọng ứng viên. Dựa trên ngữ cảnh của phản xạ, hãy kiểm tra tải trọng XSS ứng viên ban đầu sẽ kích hoạt thực thi JavaScript nếu nó được phản xạ không sửa đổi trong phản hồi. Cách dễ nhất để kiểm tra tải trọng là gửi yêu cầu đến Burp Repeater , sửa đổi yêu cầu để chèn tải trọng ứng viên, đưa ra yêu cầu, sau đó xem lại phản hồi để xem tải trọng có hoạt động không. Một cách hiệu quả để làm việc là để lại giá trị ngẫu nhiên ban đầu trong yêu cầu và đặt tải trọng XSS ứng viên trước hoặc sau nó. Sau đó, đặt giá trị ngẫu nhiên làm thuật ngữ tìm kiếm trong chế độ xem phản hồi của Burp Repeater. Burp sẽ làm nổi bật từng vị trí mà thuật ngữ tìm kiếm xuất hiện, cho phép bạn nhanh chóng xác định vị trí phản xạ.
 * Kiểm tra các tải trọng thay thế. Nếu tải trọng XSS ứng viên đã bị ứng dụng sửa đổi hoặc bị chặn hoàn toàn, thì bạn sẽ cần kiểm tra các tải trọng và kỹ thuật thay thế có thể cung cấp một cuộc tấn công XSS đang hoạt động dựa trên bối cảnh của phản xạ và loại xác thực đầu vào đang được thực hiện. Để biết thêm chi tiết, hãy xem bối cảnh tập lệnh chéo trang
 * Kiểm tra cuộc tấn công trong trình duyệt. Cuối cùng, nếu bạn thành công trong việc tìm ra một tải trọng có vẻ hoạt động trong Burp Repeater, hãy chuyển cuộc tấn công sang một trình duyệt thực (bằng cách dán URL vào thanh địa chỉ hoặc bằng cách sửa đổi yêu cầu trong chế độ xem chặn của Burp Proxy và xem JavaScript được đưa vào có thực sự được thực thi hay không. Thông thường, tốt nhất là thực thi một số JavaScript đơn giản như alert(document.domain)sẽ kích hoạt một cửa sổ bật lên có thể nhìn thấy trong trình duyệt nếu cuộc tấn công thành công.
+
+> ### 2. Stored XSS
+Lỗi mã hóa tập lệnh chéo trang được lưu trữ (còn gọi là XSS bậc hai hoặc XSS dai dẳng) phát sinh khi một ứng dụng nhận dữ liệu từ một nguồn không đáng tin cậy và đưa dữ liệu đó vào các phản hồi HTTP sau đó theo cách không an toàn.
+
+Giả sử một trang web cho phép người dùng gửi bình luận về các bài đăng trên blog, được hiển thị cho những người dùng khác. Người dùng gửi bình luận bằng yêu cầu HTTP như sau:
+`POST /post/comment HTTP/1.1
+Host: vulnerable-website.com
+Content-Length: 100
+
+postId=3&comment=This+post+was+extremely+helpful.&name=Carlos+Montoya&email=carlos%40normal-user.net`
