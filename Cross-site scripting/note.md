@@ -28,7 +28,7 @@ Giả sử ứng dụng không thực hiện bất kỳ xử lý dữ liệu nà
 URL này sẽ cho kết quả phản hồi như sau:
 `<p>You searched for: <script>/* Bad stuff here... */</script></p>`<br>
 Nếu người dùng ứng dụng khác yêu cầu URL của kẻ tấn công, thì tập lệnh do kẻ tấn công cung cấp sẽ được thực thi trên trình duyệt của người dùng nạn nhân, trong bối cảnh phiên làm việc của họ với ứng dụng.  
-> ### Ảnh hưởng của cuộc tấn công XSS Reflected
+> Ảnh hưởng của cuộc tấn công XSS Reflected
 Nếu kẻ tấn công có thể kiểm soát một tập lệnh được thực thi trong trình duyệt của nạn nhân, thì thông thường chúng có thể xâm phạm hoàn toàn người dùng đó. Trong số những thứ khác, kẻ tấn công có thể:
 
 Thực hiện bất kỳ hành động nào trong ứng dụng mà người dùng có thể thực hiện.
@@ -38,11 +38,11 @@ Thực hiện bất kỳ hành động nào trong ứng dụng mà người dùn
 Có nhiều cách khác nhau mà kẻ tấn công có thể dùng để dụ dỗ người dùng nạn nhân đưa ra yêu cầu mà chúng kiểm soát, để thực hiện một cuộc tấn công XSS phản chiếu. Những cách này bao gồm đặt liên kết trên một trang web do kẻ tấn công kiểm soát, hoặc trên một trang web khác cho phép tạo nội dung, hoặc bằng cách gửi liên kết trong email, tweet hoặc tin nhắn khác. Cuộc tấn công có thể nhắm trực tiếp vào một người dùng đã biết hoặc có thể là một cuộc tấn công bừa bãi vào bất kỳ người dùng nào của ứng dụng.
 
 Nhu cầu về một cơ chế phân phối bên ngoài cho cuộc tấn công có nghĩa là tác động của XSS phản ánh thường ít nghiêm trọng hơn XSS được lưu trữ , trong đó một cuộc tấn công độc lập có thể được phân phối trong chính ứng dụng dễ bị tấn công.
-> ### Các loại Reflected XSS
+> Các loại Reflected XSS
 Có nhiều loại kịch bản chéo trang phản chiếu khác nhau. Vị trí của dữ liệu phản chiếu trong phản hồi của ứng dụng xác định loại tải trọng nào cần thiết để khai thác nó và cũng có thể ảnh hưởng đến tác động của lỗ hổng.
 
 Ngoài ra, nếu ứng dụng thực hiện bất kỳ xác thực hoặc xử lý nào khác trên dữ liệu đã gửi trước khi dữ liệu đó được phản ánh, điều này thường sẽ ảnh hưởng đến loại tải trọng XSS cần thiết.
-> ### Làm thế nào để tìm và kiểm tra XSS Reflected ?
+> Làm thế nào để tìm và kiểm tra XSS Reflected ?
 Phần lớn các lỗ hổng tấn công chéo trang web có thể được tìm thấy nhanh chóng và đáng tin cậy bằng trình quét lỗ hổng web của Burp Suite .
 
 Kiểm tra lỗ hổng XSS phản ánh theo cách thủ công bao gồm các bước sau:
@@ -74,7 +74,7 @@ Theo yêu cầu của kẻ tấn công, bình luận này sẽ được mã hóa
 Bất kỳ người dùng nào truy cập bài đăng trên blog sẽ nhận được thông tin sau trong phản hồi của ứng dụng:  
 `<p><script>/* Bad stuff here... */</script></p>`  
 Sau đó, tập lệnh do kẻ tấn công cung cấp sẽ được thực thi trên trình duyệt của người dùng nạn nhân, trong bối cảnh phiên làm việc của họ với ứng dụng.  
-> ### Tác động của Stored XSS
+> Tác động của Stored XSS
 Nếu kẻ tấn công có thể kiểm soát một tập lệnh được thực thi trong trình duyệt của nạn nhân, thì thông thường chúng có thể xâm phạm hoàn toàn người dùng đó. Kẻ tấn công có thể thực hiện bất kỳ hành động nào có thể áp dụng cho tác động của lỗ hổng XSS được phản ánh .
 
 Về khả năng khai thác, sự khác biệt chính giữa XSS phản chiếu và XSS lưu trữ là lỗ hổng XSS lưu trữ cho phép các cuộc tấn công tự chứa trong chính ứng dụng. Kẻ tấn công không cần phải tìm cách bên ngoài để dụ dỗ người dùng khác thực hiện một yêu cầu cụ thể có chứa khai thác của họ. Thay vào đó, kẻ tấn công đặt khai thác của họ vào chính ứng dụng và chỉ cần đợi người dùng gặp phải nó.
@@ -84,7 +84,7 @@ Bản chất khép kín của các khai thác tập lệnh chéo trang được 
 Có nhiều loại mã lệnh cross-site scripting được lưu trữ khác nhau. Vị trí của dữ liệu được lưu trữ trong phản hồi của ứng dụng xác định loại tải trọng nào cần thiết để khai thác nó và cũng có thể ảnh hưởng đến tác động của lỗ hổng.
 
 Ngoài ra, nếu ứng dụng thực hiện bất kỳ xác thực hoặc xử lý nào khác trên dữ liệu trước khi dữ liệu được lưu trữ hoặc tại thời điểm dữ liệu được lưu trữ được đưa vào phản hồi, điều này thường sẽ ảnh hưởng đến loại tải trọng XSS cần thiết.  
-> ### Cách tìm lỗ hổng Stored XSS
+> Cách tìm lỗ hổng Stored XSS
 Nhiều lỗ hổng XSS được lưu trữ có thể được tìm thấy bằng trình quét lỗ hổng web của Burp Suite .
 
 Kiểm tra các lỗ hổng XSS được lưu trữ theo cách thủ công có thể là một thách thức. Bạn cần kiểm tra tất cả các "điểm vào" có liên quan mà qua đó dữ liệu có thể kiểm soát được của kẻ tấn công có thể vào quá trình xử lý của ứng dụng và tất cả các "điểm thoát" mà dữ liệu đó có thể xuất hiện trong phản hồi của ứng dụng.
@@ -106,3 +106,27 @@ Dữ liệu hiện đang được ứng dụng lưu trữ thường dễ bị gh
 Thay vào đó, một cách tiếp cận thực tế hơn là làm việc một cách có hệ thống thông qua các điểm nhập dữ liệu, gửi một giá trị cụ thể vào từng điểm và theo dõi phản hồi của ứng dụng để phát hiện các trường hợp giá trị đã gửi xuất hiện. Có thể đặc biệt chú ý đến các chức năng ứng dụng có liên quan, chẳng hạn như bình luận trên các bài đăng trên blog. Khi giá trị đã gửi được quan sát thấy trong phản hồi, bạn cần xác định xem dữ liệu có thực sự được lưu trữ trên các yêu cầu khác nhau hay không, trái ngược với việc chỉ được phản ánh trong phản hồi ngay lập tức.
 
 Khi bạn đã xác định được các liên kết giữa các điểm vào và ra trong quá trình xử lý của ứng dụng, mỗi liên kết cần được kiểm tra cụ thể để phát hiện xem có lỗ hổng XSS được lưu trữ hay không. Điều này bao gồm việc xác định ngữ cảnh trong phản hồi nơi dữ liệu được lưu trữ xuất hiện và kiểm tra các tải trọng XSS ứng viên phù hợp có thể áp dụng cho ngữ cảnh đó. Tại thời điểm này, phương pháp kiểm tra về cơ bản giống như để tìm lỗ hổng XSS Reflected
+> ### DOM BASED XSS
+Lỗ hổng XSS dựa trên DOM thường phát sinh khi JavaScript lấy dữ liệu từ nguồn do kẻ tấn công kiểm soát, chẳng hạn như URL, và chuyển dữ liệu đó đến một bộ đệm hỗ trợ thực thi mã động, chẳng hạn như eval()hoặc innerHTML. Điều này cho phép kẻ tấn công thực thi JavaScript độc hại, thường cho phép chúng chiếm đoạt tài khoản của người dùng khác.
+
+Để thực hiện cuộc tấn công XSS dựa trên DOM, bạn cần đưa dữ liệu vào nguồn để dữ liệu đó được truyền đến bộ thu và gây ra việc thực thi JavaScript tùy ý.
+
+Nguồn phổ biến nhất cho DOM XSS là URL, thường được truy cập bằng window.locationđối tượng. Kẻ tấn công có thể xây dựng một liên kết để gửi nạn nhân đến một trang dễ bị tấn công với một tải trọng trong chuỗi truy vấn và các phần phân đoạn của URL. Trong một số trường hợp nhất định, chẳng hạn như khi nhắm mục tiêu vào trang 404 hoặc một trang web chạy PHP, tải trọng cũng có thể được đặt trong đường dẫn.
+
+Để biết giải thích chi tiết về luồng lây nhiễm giữa nguồn và nơi chứa, vui lòng tham khảo trang lỗ hổng dựa trên DOM .  
+> Cách kiểm tra DOM BASED XSS
+Phần lớn các lỗ hổng DOM XSS có thể được tìm thấy nhanh chóng và đáng tin cậy bằng trình quét lỗ hổng web của Burp Suite . Để kiểm tra mã lệnh chéo trang dựa trên DOM theo cách thủ công, bạn thường cần sử dụng trình duyệt có các công cụ dành cho nhà phát triển, chẳng hạn như Chrome. Bạn cần lần lượt xử lý từng nguồn có sẵn và kiểm tra từng nguồn riêng lẻ.
+** Kiểm tra bồn chứa HTML **
+Để kiểm tra DOM XSS trong một bồn chứa HTML, hãy đặt một chuỗi chữ số ngẫu nhiên vào nguồn (chẳng hạn như location.search), sau đó sử dụng các công cụ dành cho nhà phát triển để kiểm tra HTML và tìm nơi chuỗi của bạn xuất hiện. Lưu ý rằng tùy chọn "Xem nguồn" của trình duyệt sẽ không hoạt động đối với thử nghiệm DOM XSS vì nó không tính đến các thay đổi đã được JavaScript thực hiện trong HTML. Trong các công cụ dành cho nhà phát triển của Chrome, bạn có thể sử dụng Control+F(hoặc Command+Ftrên MacOS) để tìm kiếm DOM cho chuỗi của bạn.
+
+Đối với mỗi vị trí mà chuỗi của bạn xuất hiện trong DOM, bạn cần xác định ngữ cảnh. Dựa trên ngữ cảnh này, bạn cần tinh chỉnh đầu vào của mình để xem cách nó được xử lý. Ví dụ, nếu chuỗi của bạn xuất hiện trong một thuộc tính được trích dẫn kép thì hãy thử chèn dấu ngoặc kép vào chuỗi của bạn để xem bạn có thể thoát khỏi thuộc tính đó không.
+
+Lưu ý rằng các trình duyệt hoạt động khác nhau liên quan đến mã hóa URL, Chrome, Firefox và Safari sẽ mã hóa URL location.searchvà location.hash, trong khi IE11 và Microsoft Edge (trước Chromium) sẽ không mã hóa URL các nguồn này. Nếu dữ liệu của bạn được mã hóa URL trước khi được xử lý, thì cuộc tấn công XSS khó có thể thành công.  
+** Kiểm tra bộ thực thi JS **
+Kiểm tra các bồn rửa thực thi JavaScript cho XSS dựa trên DOM khó hơn một chút. Với các bồn rửa này, đầu vào của bạn không nhất thiết phải xuất hiện ở bất kỳ đâu trong DOM, do đó bạn không thể tìm kiếm nó. Thay vào đó, bạn sẽ cần sử dụng trình gỡ lỗi JavaScript để xác định liệu đầu vào của bạn có được gửi đến bồn rửa hay không và bằng cách nào.
+
+Đối với mỗi nguồn tiềm năng, chẳng hạn như location, trước tiên bạn cần tìm các trường hợp trong mã JavaScript của trang nơi nguồn được tham chiếu. Trong công cụ dành cho nhà phát triển của Chrome, bạn có thể sử dụng Control+Shift+F(hoặc Command+Alt+Ftrên MacOS) để tìm kiếm toàn bộ mã JavaScript của trang cho nguồn đó.
+
+Sau khi tìm thấy nơi nguồn đang được đọc, bạn có thể sử dụng trình gỡ lỗi JavaScript để thêm điểm ngắt và theo dõi cách sử dụng giá trị của nguồn. Bạn có thể thấy nguồn được gán cho các biến khác. Nếu đúng như vậy, bạn sẽ cần sử dụng lại hàm tìm kiếm để theo dõi các biến này và xem chúng có được truyền đến một bồn chứa hay không. Khi bạn tìm thấy một bồn chứa đang được gán dữ liệu có nguồn gốc từ nguồn, bạn có thể sử dụng trình gỡ lỗi để kiểm tra giá trị bằng cách di chuột qua biến để hiển thị giá trị của nó trước khi được gửi đến bồn chứa. Sau đó, giống như với bồn chứa HTML, bạn cần tinh chỉnh đầu vào của mình để xem liệu bạn có thể thực hiện thành công một cuộc tấn công XSS hay không.  
+** Kiểm tra DOM XSS bằng DOM Invader **
+Xác định và khai thác DOM XSS trong tự nhiên có thể là một quá trình tẻ nhạt, thường yêu cầu bạn phải tự tay tìm kiếm JavaScript phức tạp, được thu nhỏ. Tuy nhiên, nếu bạn sử dụng trình duyệt Burp, bạn có thể tận dụng tiện ích mở rộng DOM Invader tích hợp của nó, tiện ích này sẽ thực hiện rất nhiều công việc khó khăn cho bạn.  
