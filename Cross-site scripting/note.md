@@ -10,3 +10,5 @@ Tác động thực tế của một cuộc tấn công XSS thường phụ thu�
 * Trong ứng dụng lưu trữ dữ liệu nhạy cảm, chẳng hạn như giao dịch ngân hàng, email hoặc hồ sơ chăm sóc sức khỏe, tác động thường sẽ rất nghiêm trọng.
 * Nếu người dùng bị xâm phạm có quyền cao hơn trong ứng dụng, thì tác động thường sẽ rất nghiêm trọng, cho phép kẻ tấn công kiểm soát hoàn toàn ứng dụng 
   dễ bị tấn công và xâm phạm tất cả người dùng và dữ liệu của họ.
+  haha
+  hoho
