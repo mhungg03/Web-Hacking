@@ -2,8 +2,7 @@
 ![image](https://github.com/user-attachments/assets/11ee1649-688c-4977-bca6-a6787a8335e4)  
 Khi bấm send thì cmt sẽ ngay lập tức được hiện ra ở bài post
 ![image](https://github.com/user-attachments/assets/6792c489-626c-4b41-af32-675a48029c6b)    
-**B2**: Để kiểm tra xem trang web có encode HTML tag hay không ta thử cmt  
-<h1>Blah</h1>  
+**B2**: Để kiểm tra xem trang web có encode HTML tag hay không ta thử cmt <h1>blah</h1> 
 
 ![image](https://github.com/user-attachments/assets/44fd601d-9f2d-42e9-85c0-47083065cdd1)    
 ![image](https://github.com/user-attachments/assets/4fff0e79-94d6-4a19-b257-9026b9f7853d)    
