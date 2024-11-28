@@ -7,7 +7,7 @@ Khi bấm send thì cmt sẽ ngay lập tức được hiện ra ở bài post
 
 ![image](https://github.com/user-attachments/assets/44fd601d-9f2d-42e9-85c0-47083065cdd1)    
 ![image](https://github.com/user-attachments/assets/4fff0e79-94d6-4a19-b257-9026b9f7853d)    
-Blah đã thành tiêu đề H1, do đó trang web không hề encode HTML tag
+Blah đã thành tiêu đề H1, do đó trang web không hề encode HTML tag  
 **B3**: Nhập <script>alert('xss')</script> để tấn công Stored XSS  
 ![image](https://github.com/user-attachments/assets/11e6e60b-1a19-4b74-a01f-e09d392e1d24)
 
