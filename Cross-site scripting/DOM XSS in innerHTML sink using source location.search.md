@@ -7,7 +7,7 @@ Website không hề encode thẻ html nên ta có thể thấy html tag đã đ�
 Chúng ta vẫn nằm trong thẻ span :) thử tìm kiếm file js xem  
 ![image](https://github.com/user-attachments/assets/ab806143-9d23-401b-b0f0-e2eccff04eb0)
 **B3**: Đọc file js ta có thể thấy web đang sử dụng innerhtml để thêm nội dung từ query  
-=> sử dụng payload sau để XSS `<img src=1 onerror="alert(1)">  
+=> sử dụng payload sau để XSS `<img src=1 onerror="alert(1)">`  
 ![image](https://github.com/user-attachments/assets/16a1b4b5-8c5d-4da9-a21d-de306dcd793e)  
 ![image](https://github.com/user-attachments/assets/9d797ae2-8d1d-41ec-a485-9f62b54ae66b)  
 => Thẻ img đã được thêm vào DOM do đó kích hoạt sự kiện onerror do source ảnh bị sai 
