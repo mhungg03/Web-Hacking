@@ -9,6 +9,7 @@ Dấu ngoặc nhọn đã bị encode nên js không thể thực thi
 * Không khai thác được, payload vẫn đang nằm trong dấu ' '
 * Dùng payload sau để truy cập function constructor tạo ra 1 hàm mới
   `{{$on.constructor('alert(1)')()}}`
+  
  pop up alert đã xuất hiện
 
 
