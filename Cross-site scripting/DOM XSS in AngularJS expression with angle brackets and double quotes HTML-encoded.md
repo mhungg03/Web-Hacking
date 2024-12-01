@@ -8,7 +8,7 @@ Dấu ngoặc nhọn đã bị encode nên js không thể thực thi
   ![image](https://github.com/user-attachments/assets/19d8b149-323e-46c1-b261-364a16c4c3fb)
 * Không khai thác được, payload vẫn đang nằm trong dấu ' '
 * Dùng payload sau để truy cập function constructor tạo ra 1 hàm mới
-  `{{$on.constructor('alert(1)')()}}`
+  `{{$on.constructor('alert(1)')()}}` <br>
   pop up alert đã xuất hiện
 
 
